@@ -21,11 +21,11 @@ public class Shifter : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        print("HIT");
+        //print("HIT");
 
         if (other.CompareTag("Player"))
         {
-            print("BIGHIT");
+            //print("BIGHIT");
             transform.position = transform.position + new Vector3(0, 0, TubeCount * 50);
         }
     }
