@@ -204,7 +204,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8073508b1291bab479243d64b041d05e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TubeCount: 3
+  TubeCount: 4
 --- !u!54 &3468157264008293971
 Rigidbody:
   m_ObjectHideFlags: 0

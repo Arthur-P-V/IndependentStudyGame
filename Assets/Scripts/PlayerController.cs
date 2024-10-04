@@ -28,12 +28,10 @@ public class PlayerController : MonoBehaviour
             transform.Translate(new Vector3(horizontalDirection * speed * Time.deltaTime, verticalDirection * speed * Time.deltaTime, 0));
         }
         
-        
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-
         print("HIT");
         if (collision.collider.CompareTag("Wall")) {
             dead = true;
