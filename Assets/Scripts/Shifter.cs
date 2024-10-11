@@ -23,7 +23,7 @@ public class Shifter : MonoBehaviour
     {
         //print("HIT");
 
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player")) //Shift tube segments while game is running
         {
             //print("BIGHIT");
             transform.position = transform.position + new Vector3(0, 0, TubeCount * 50);

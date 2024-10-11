@@ -50,7 +50,11 @@ public class Spawner : MonoBehaviour
     private IEnumerator Runspawner() {
 
         while (true) {
-            Spawn();
+            if (!GameManager.Instance.GameOver) //Run the spawner till the game stops
+            {
+                Spawn();
+            }
+            
             yield return new WaitForSeconds(spawnInterval);  
         }
 
