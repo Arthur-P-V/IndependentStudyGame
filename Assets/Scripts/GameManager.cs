@@ -7,11 +7,9 @@ using TMPro;
 using UnityEngine.UIElements;
 using System.Linq;
 
-public class GameManager : MonoBehaviour
+public class GameManager : Singleton<GameManager>
 {
     // Start is called before the first frame update
-
-    public static GameManager Instance;
     public GameObject GameOverText;
     public bool GameOver = false;
     public bool saved = false;
@@ -23,17 +21,14 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI highScoreText;
 
     public GameObject Leaderboard;
-    public List<TextMeshProUGUI> Scores = new List<TextMeshProUGUI>();
-
-    private void Awake()
-    {
-        Instance = this;
-    }
+    public List<int> lbScores = new List<int>();
+    public List<TextMeshProUGUI> lbEntries = new List<TextMeshProUGUI>();
 
     void Start()
     {
+        score = 0;
         //PlayerPrefs.DeleteAll();
-        bestScore = PlayerPrefs.GetInt("0", 0); //Grabs the highest score (index 0) or returns 0
+        bestScore = lbScores.First(); //Grabs the highest score (index 0) or returns 0
         highScoreText.text = "Best: " + bestScore;
         StartCoroutine("TickScore");
     }
@@ -75,37 +70,15 @@ public class GameManager : MonoBehaviour
     public void DisplayLeaderboard() {
         for (int i = 0; i < 5; i++)
         {
-            Scores[i].text = $"{i+1}. {PlayerPrefs.GetInt($"{i}", 0)}";
+            lbEntries[i].text = $"{i+1}. {PlayerPrefs.GetInt($"{i}", 0)}";
         }
     
     }
 
     public void UpdateLeaderboard(int score)
     {
-        int scoreIndex = 0; //Index of position for new entry
-        int tempScore = 0; //container for scores when shifting entries
-        for (int i = 0; i < 5; i++)
-        {
-            if (score > PlayerPrefs.GetInt($"{i}", 0))
-            { // Grab Index of position for new score
-                scoreIndex = i;
-                break;
-            }
-        }
-
-        for (int i = scoreIndex; i < 5; i++) {
-            if (PlayerPrefs.HasKey($"{i}"))
-            {
-                tempScore =  PlayerPrefs.GetInt($"{i}", 0);
-                PlayerPrefs.DeleteKey($"{i}");
-            }
-            
-            PlayerPrefs.SetInt($"{i}", score);
-            score = tempScore;
-        }
-
-        PlayerPrefs.Save();
-
+        lbScores.Add(score);
+        lbScores.Sort();
     }
 
     public IEnumerator TickScore() {
