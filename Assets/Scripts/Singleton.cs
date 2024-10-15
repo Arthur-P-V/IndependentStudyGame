@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Unity.VisualScripting;
 
 public class Singleton<T> : MonoBehaviour where T : Singleton<T>
 {
@@ -19,8 +20,9 @@ public class Singleton<T> : MonoBehaviour where T : Singleton<T>
     {
         if(instance != null)
         {
-            Debug.LogError("[Singleton] Trying to instantiate a" +
-                " second instance of a singleton class");
+            Destroy(gameObject);
+            //Debug.LogError("[Singleton] Trying to instantiate a" +
+                //" second instance of a singleton class");
         }
         else
         {

@@ -28,8 +28,7 @@ public class GameManager : Singleton<GameManager>
     {
         score = 0;
         //PlayerPrefs.DeleteAll();
-        bestScore = lbScores.First(); //Grabs the highest score (index 0) or returns 0
-        highScoreText.text = "Best: " + bestScore;
+        bestScore = lbScores.FirstOrDefault(); //Grabs the highest score (index 0) or returns 0
         StartCoroutine("TickScore");
     }
 
@@ -41,6 +40,10 @@ public class GameManager : Singleton<GameManager>
         if (score > bestScore) {
             highScoreText.text = "Best: " + score;
         }
+        else
+        {
+            highScoreText.text = "Best: " + bestScore;
+        }
 
 
 
@@ -49,6 +52,7 @@ public class GameManager : Singleton<GameManager>
             GameOver = true;
             if (Input.GetKeyDown(KeyCode.R)) {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                Reset();
             }
         }
 
@@ -70,9 +74,21 @@ public class GameManager : Singleton<GameManager>
     public void DisplayLeaderboard() {
         for (int i = 0; i < 5; i++)
         {
-            lbEntries[i].text = $"{i+1}. {PlayerPrefs.GetInt($"{i}", 0)}";
+            lbEntries[i].text = $"{i+1}. {lbScores.ElementAtOrDefault(i)}";
         }
     
+    }
+
+    public void Reset()
+    {
+        score = 0;
+        bestScore = lbScores.FirstOrDefault();
+        Leaderboard.SetActive(false);
+        GameOverText.SetActive(false);
+        GameOver = false;
+        saved = false;
+        StartCoroutine("TickScore");
+        Player = FindObjectOfType<PlayerController>().GetComponent<PlayerController>();
     }
 
     public void UpdateLeaderboard(int score)
