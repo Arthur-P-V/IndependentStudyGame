@@ -21,6 +21,12 @@ public class Spawner : MonoBehaviour
     //Tag objects with a level and spawn ALL OF THEM in the beginning? then as the player goes through the levels more objects are added to the pool for instantiation giving variety
 
     // Start is called before the first frame update
+    private void Awake()
+    {
+        Player = GameObject.Find("Player");
+
+
+    }
     void Start()
     {
         pool = transform.GetChild(0).gameObject;

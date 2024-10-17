@@ -51,8 +51,8 @@ public class GameManager : Singleton<GameManager>
             GameOverText.SetActive(true);
             GameOver = true;
             if (Input.GetKeyDown(KeyCode.R)) {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                 Reset();
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             }
         }
 
@@ -80,21 +80,23 @@ public class GameManager : Singleton<GameManager>
     }
 
     public void Reset()
-    {
+    { 
         score = 0;
         bestScore = lbScores.FirstOrDefault();
         Leaderboard.SetActive(false);
         GameOverText.SetActive(false);
         GameOver = false;
         saved = false;
+        Player.dead = false;
+        Player.transform.position = new Vector3(0, 0, -20);
         StartCoroutine("TickScore");
-        Player = FindObjectOfType<PlayerController>().GetComponent<PlayerController>();
+        
     }
 
     public void UpdateLeaderboard(int score)
     {
         lbScores.Add(score);
-        lbScores.Sort();
+        lbScores.Sort((a, b) => b.CompareTo(a)); //Sort Descending
     }
 
     public IEnumerator TickScore() {
