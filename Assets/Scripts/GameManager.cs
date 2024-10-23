@@ -75,7 +75,7 @@ public class GameManager : Singleton<GameManager>
         if (score > scoreToNextLevel) {
             level += 1;
             CalculateNextScore();
-            Player.forwardSpeed += Player.forwardSpeed * 0.07f; //Speed up by 7% every level
+            Player.forwardSpeed += Player.forwardSpeed * 0.1f; //Speed up by 7% every level
         }
 
         if (Player.dead) {
@@ -114,6 +114,7 @@ public class GameManager : Singleton<GameManager>
     { 
         score = 0;
         level = 1;
+        scoreToNextLevel = 100;
         bestScore = lbScores.FirstOrDefault();
         Leaderboard.SetActive(false);
         GameOverText.SetActive(false);

@@ -529,6 +529,7 @@ MonoBehaviour:
   ObstaclePrefabs:
   - {fileID: 8487015258915928509, guid: 023dc0402d4f39c44827a9fc23cdad1f, type: 3}
   - {fileID: 117876553191538049, guid: 3cdaeb579b0d3fa4fa115b2470848ae3, type: 3}
+  - {fileID: 3648917426441077275, guid: cb1ab7e0dcca6eb44b31b02d97dccf89, type: 3}
   spawnInterval: 1
 --- !u!4 &475409407
 Transform:
