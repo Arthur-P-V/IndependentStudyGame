@@ -21,7 +21,7 @@ public class Wall : Obstacle
         
     }
 
-    public override void Spawn(Transform spawnerTransform)
+    public override void Spawn(Vector3 spawnerTransform)
     {
         base.Spawn(spawnerTransform);
 
@@ -29,16 +29,16 @@ public class Wall : Obstacle
 
         switch (option) {
             case 1:
-                transform.position = new Vector3(spawnerTransform.position.x -30, spawnerTransform.position.y + 10, spawnerTransform.position.z);
+                gameObject.transform.position = new Vector3(spawnerTransform.x -30, spawnerTransform.y + 10, spawnerTransform.z);
                 break;
             case 2:
-                transform.position = new Vector3(spawnerTransform.position.x + 30, spawnerTransform.position.y + 10, spawnerTransform.position.z);
+                gameObject.transform.position = new Vector3(spawnerTransform.x + 30, spawnerTransform.y + 10, spawnerTransform.z);
                 break;
             case 3:
-                transform.position = new Vector3(spawnerTransform.position.x + 9, spawnerTransform.position.y - 30, spawnerTransform.position.z);
+                gameObject.transform.position = new Vector3(spawnerTransform.x + 9, spawnerTransform.y - 30, spawnerTransform.z);
                 break;
             case 4:
-                transform.position = new Vector3(spawnerTransform.position.x + 9, spawnerTransform.position.y + 30, spawnerTransform.position.z);
+                gameObject.transform.position = new Vector3(spawnerTransform.x + 9, spawnerTransform.y + 30, spawnerTransform.z);
                 break;
         }
     }

@@ -23,7 +23,7 @@ public class Obstacle : MonoBehaviour
         
     }
 
-    public virtual void Spawn(Transform spawnerTransform) { 
+    public virtual void Spawn(Vector3 spawnerTransform) { 
         
     }
 }

@@ -28,19 +28,15 @@ public class Spawner : MonoBehaviour
     }
     void Start()
     {
-        pool = transform.GetChild(0).gameObject; //Grab pool child object
-
         foreach (var obstacle in ObstaclePrefabs ) {
             for (int i = 0; i < 10; i++)
             {
-                GameObject temp = Instantiate(obstacle, pool.transform.position, Quaternion.identity);
-                if (obstacle.GetComponent<Obstacle>().obstacleLevel == 1)
-                {
-                    obstacleQueue.Add(obstacle);
-                }
+                GameObject temp = Instantiate(obstacle, transform.position, Quaternion.identity);
+                obstacleQueue.Add(temp);
             }
             
         }
+        obstacleQueue = obstacleQueue.OrderBy(x => Random.value).ToList(); // Shuffle List
 
         StartCoroutine("Runspawner");
 
@@ -70,13 +66,10 @@ public class Spawner : MonoBehaviour
 
     private void Spawn()
     {
-        print("SpawnerMethod");
-
         GameObject obstacleToSpawn = obstacleQueue.ElementAt(0);  //Mimics a FIFO queue but allows me to shuffle when changing levels and potentially adding new obstacles
-        //print(obstacleToSpawn.name);
         obstacleQueue.RemoveAt(0);
         obstacleQueue.Add(obstacleToSpawn);
 
-        obstacleToSpawn.GetComponent<Obstacle>().Spawn(gameObject.transform);
+        obstacleToSpawn.GetComponent<Obstacle>().Spawn(gameObject.transform.position);
     }
 }

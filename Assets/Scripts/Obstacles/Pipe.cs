@@ -19,17 +19,13 @@ public class Pipe : Obstacle
     {
         
     }
-    public override void Spawn(Transform spawnerTransform) {
+    public override void Spawn(Vector3 spawnerTransform) {
         base.Spawn(spawnerTransform);   
-        
-        print(spawnerTransform.position);
-
-        print("PipeSpawner");
 
         float x = Random.Range(-20f, 20f);
         float y = Random.Range(-10f, 10f);
         float rotation = Random.Range(0f, 180f);
-
-        transform.SetPositionAndRotation(new Vector3(x, y, spawnerTransform.position.z), Quaternion.Euler(0, 0, rotation));
+        Vector3 newTransform = new(x, y, spawnerTransform.z);
+        gameObject.transform.SetPositionAndRotation(newTransform, Quaternion.Euler(0, 0, rotation));
     }
 }
