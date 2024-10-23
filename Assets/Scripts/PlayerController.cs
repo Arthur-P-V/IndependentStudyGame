@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.U2D;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -35,7 +36,7 @@ public class PlayerController : MonoBehaviour
         print("HIT");
         if (collision.collider.CompareTag("Wall")) {
             dead = true;
-
+            forwardSpeed -= forwardSpeed * 0.25f; // Decrease Speed by 25% on death
         }
     }
 }
