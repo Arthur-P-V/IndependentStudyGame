@@ -18,6 +18,7 @@ public class GameManager : Singleton<GameManager>
     public List<int> lbScores = new List<int>();
     public Feedback feedbackLevel = Feedback.Medium;
     public Variety varietyLevel = Variety.Medium;
+    public bool recentlyLeveled = false;
     
     //Stat and Behavior at the same time
     public int level = 1;
@@ -76,6 +77,7 @@ public class GameManager : Singleton<GameManager>
             level += 1;
             CalculateNextScore();
             Player.forwardSpeed += Player.forwardSpeed * 0.1f; //Speed up by 7% every level
+            StartCoroutine("LeveledSignal");
         }
 
         if (Player.dead) {
@@ -142,6 +144,12 @@ public class GameManager : Singleton<GameManager>
             yield return new WaitForSeconds(scoreInterval);
         }
         
+    }
+
+    public IEnumerator LeveledSignal() {
+        recentlyLeveled = true;
+        yield return new WaitForSeconds(0.05f);
+        recentlyLeveled = false;
     }
 
     public void CalculateNextScore() {

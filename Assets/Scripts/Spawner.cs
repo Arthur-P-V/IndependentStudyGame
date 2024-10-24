@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Xml.Schema;
+using Unity.VisualScripting;
 using Unity.VisualScripting.Dependencies.Sqlite;
 using UnityEngine;
 using UnityEngine.Subsystems;
@@ -16,6 +18,7 @@ public class Spawner : MonoBehaviour
     public float spawnInterval = 1f;
 
     private List<GameObject> obstacleQueue = new List<GameObject>();
+    private List<GameObject> waitingForQueue = new List<GameObject>();
     
     private GameObject pool;
 
@@ -32,7 +35,15 @@ public class Spawner : MonoBehaviour
             for (int i = 0; i < 10; i++)
             {
                 GameObject temp = Instantiate(obstacle, transform.position, Quaternion.identity);
-                obstacleQueue.Add(temp);
+
+                if (temp.GetComponent<Obstacle>().obstacleLevel == 1) { 
+                    obstacleQueue.Add(temp);
+                }
+                else
+                {
+                    waitingForQueue.Add(temp);
+                }
+                
             }
             
         }
@@ -47,6 +58,20 @@ public class Spawner : MonoBehaviour
     {
         transform.position = new Vector3(0, 0, Player.transform.position.z + 150);
 
+        if (GameManager.Instance.recentlyLeveled) { 
+            switch (GameManager.Instance.varietyLevel) {
+                case (GameManager.Variety.Low):
+                    break;
+                case (GameManager.Variety.Medium):
+                    AddObstaclesOfLevel(GameManager.Instance.level);
+                    break;
+                case (GameManager.Variety.High):
+                    AddObstaclesOfLevel(GameManager.Instance.level + 1);
+                    break;
+            }
+        
+        }
+        
     }
 
     private IEnumerator Runspawner() {
@@ -71,5 +96,15 @@ public class Spawner : MonoBehaviour
         obstacleQueue.Add(obstacleToSpawn);
 
         obstacleToSpawn.GetComponent<Obstacle>().Spawn(gameObject.transform.position);
+    }
+
+    public void AddObstaclesOfLevel(int level) {
+        foreach (var obstacle in waitingForQueue) {
+            if (obstacle.GetComponent<Obstacle>().obstacleLevel <= level) {
+                GameObject temp = obstacle;
+                waitingForQueue.Remove(obstacle);
+                obstacleQueue.Insert(Random.Range(0, obstacleQueue.Count), temp);
+            }
+        }
     }
 }
