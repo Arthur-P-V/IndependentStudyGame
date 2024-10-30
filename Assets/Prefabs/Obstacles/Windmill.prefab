@@ -347,7 +347,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 116ae23be5cb34249868fe8edbcfe8e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  obstacleLevel: 1
+  obstacleLevel: 3
 --- !u!4 &4172690322585852065 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f955d171c317fd349b177e43a0e44fa9, type: 3}

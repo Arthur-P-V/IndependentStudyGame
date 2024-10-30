@@ -809,9 +809,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Game Over!
+  m_text: 'You Crashed!
 
-    Press R to restart'
+    Press R to retry
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1672,7 +1674,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 35
-  forwardSpeed: 250
+  forwardSpeed: 30
   dead: 0
 --- !u!64 &1414846880
 MeshCollider:
@@ -2445,6 +2447,7 @@ MonoBehaviour:
   lbScores: 
   feedbackLevel: 1
   varietyLevel: 1
+  recentlyLeveled: 0
   level: 1
   scoreToNextLevel: 100
   score: 0

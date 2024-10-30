@@ -146,4 +146,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3b4e5cfbcbb7fb4696836279d9a5cf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  obstacleLevel: 1
+  obstacleLevel: 2

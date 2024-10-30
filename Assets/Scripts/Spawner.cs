@@ -1,13 +1,7 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Xml.Schema;
-using Unity.VisualScripting;
-using Unity.VisualScripting.Dependencies.Sqlite;
 using UnityEngine;
-using UnityEngine.Subsystems;
 using Random = UnityEngine.Random;
 
 public class Spawner : MonoBehaviour
@@ -69,6 +63,7 @@ public class Spawner : MonoBehaviour
                     AddObstaclesOfLevel(GameManager.Instance.level + 1);
                     break;
             }
+            GameManager.Instance.recentlyLeveled= false; //setting this back to false ensures we don't run this again until the player levels again
         
         }
         
@@ -99,10 +94,10 @@ public class Spawner : MonoBehaviour
     }
 
     public void AddObstaclesOfLevel(int level) {
-        foreach (var obstacle in waitingForQueue) {
-            if (obstacle.GetComponent<Obstacle>().obstacleLevel <= level) {
-                GameObject temp = obstacle;
-                waitingForQueue.Remove(obstacle);
+        for (int i = 0; i < waitingForQueue.Count; i++ ) {
+            if (waitingForQueue.ElementAt(i).GetComponent<Obstacle>().obstacleLevel <= level) {
+                GameObject temp = waitingForQueue.ElementAt(i);
+                waitingForQueue.Remove(waitingForQueue.ElementAt(i));
                 obstacleQueue.Insert(Random.Range(0, obstacleQueue.Count), temp);
             }
         }
