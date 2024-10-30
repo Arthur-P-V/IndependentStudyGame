@@ -56,6 +56,8 @@ public class GameManager : Singleton<GameManager>
         //PlayerPrefs.DeleteAll();
         bestScore = lbScores.FirstOrDefault(); //Grabs the highest score (index 0) or returns 0
         StartCoroutine("TickScore");
+
+        
     }
 
     // Update is called once per frame
@@ -76,8 +78,8 @@ public class GameManager : Singleton<GameManager>
         if (score > scoreToNextLevel) {
             level += 1;
             CalculateNextScore();
-            Player.forwardSpeed += Player.forwardSpeed * 0.1f; //Speed up by 7% every level
-            StartCoroutine("LeveledSignal");
+            Player.forwardSpeed += Player.forwardSpeed * 0.1f; //Speed up by 10% every level
+            recentlyLeveled = true; //Signal the spawner to check if more obstacles should be queued
         }
 
         if (Player.dead) {
@@ -96,9 +98,12 @@ public class GameManager : Singleton<GameManager>
                 //{
                 //    Scores[i].text = $"{i}. {PlayerPrefs.GetInt($"{i}", 0)}";
                 //}
-            Leaderboard.SetActive(true);
             saved = true;
-            DisplayLeaderboard();
+            if (feedbackLevel == Feedback.Medium || feedbackLevel == Feedback.High)
+            {
+                Leaderboard.SetActive(true);
+                DisplayLeaderboard();
+            }
         }
 
     }
@@ -144,12 +149,6 @@ public class GameManager : Singleton<GameManager>
             yield return new WaitForSeconds(scoreInterval);
         }
         
-    }
-
-    public IEnumerator LeveledSignal() {
-        recentlyLeveled = true;
-        yield return new WaitForSeconds(0.05f);
-        recentlyLeveled = false;
     }
 
     public void CalculateNextScore() {
