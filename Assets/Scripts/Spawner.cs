@@ -9,10 +9,12 @@ public class Spawner : MonoBehaviour
 
     public GameObject Player;
     public List<GameObject> ObstaclePrefabs;
-    public float spawnInterval = 1f;
+    public GameObject coin;
+    public float spawnInterval = 2f;
 
     private List<GameObject> obstacleQueue = new List<GameObject>();
     private List<GameObject> waitingForQueue = new List<GameObject>();
+    private List<GameObject> coinQueue = new List<GameObject>();
     
     private GameObject pool;
 
@@ -41,6 +43,12 @@ public class Spawner : MonoBehaviour
             }
             
         }
+
+        for (int i = 0; i < 20; i++) {
+            GameObject tempCoin = Instantiate(coin, transform.position, Quaternion.identity );
+            coinQueue.Add(tempCoin);
+        } 
+
         obstacleQueue = obstacleQueue.OrderBy(x => Random.value).ToList(); // Shuffle List
 
         StartCoroutine("Runspawner");
@@ -75,13 +83,20 @@ public class Spawner : MonoBehaviour
             if (!GameManager.Instance.GameOver) //Run the spawner till the game stops
             {
                 Spawn();
+                yield return new WaitForSeconds(spawnInterval / 2);
+                SpawnCoin();
             }
             
-            yield return new WaitForSeconds(spawnInterval);  
-        }
+            yield return new WaitForSeconds(spawnInterval / 2);  
+        }   
+    }
 
-
-        
+    private void SpawnCoin()
+    {
+        GameObject coinToSpawn = coinQueue.ElementAt(0);
+        coinQueue.RemoveAt(0);
+        coinQueue.Add(coinToSpawn);
+        coinToSpawn.GetComponent<Coin>().Spawn(transform.position);
     }
 
     private void Spawn()

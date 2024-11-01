@@ -29,16 +29,16 @@ public class Wall : Obstacle
 
         switch (option) {
             case 1:
-                gameObject.transform.position = new Vector3(spawnerTransform.x -30, spawnerTransform.y + 10, spawnerTransform.z);
+                gameObject.transform.position = new Vector3(spawnerTransform.x -35, spawnerTransform.y, spawnerTransform.z);
                 break;
             case 2:
-                gameObject.transform.position = new Vector3(spawnerTransform.x + 30, spawnerTransform.y + 10, spawnerTransform.z);
+                gameObject.transform.position = new Vector3(spawnerTransform.x + 35, spawnerTransform.y, spawnerTransform.z);
                 break;
             case 3:
-                gameObject.transform.position = new Vector3(spawnerTransform.x + 9, spawnerTransform.y - 30, spawnerTransform.z);
+                gameObject.transform.position = new Vector3(spawnerTransform.x, spawnerTransform.y - 35, spawnerTransform.z);
                 break;
             case 4:
-                gameObject.transform.position = new Vector3(spawnerTransform.x + 9, spawnerTransform.y + 30, spawnerTransform.z);
+                gameObject.transform.position = new Vector3(spawnerTransform.x, spawnerTransform.y + 35, spawnerTransform.z);
                 break;
         }
     }

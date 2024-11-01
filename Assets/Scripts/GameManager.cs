@@ -27,6 +27,7 @@ public class GameManager : Singleton<GameManager>
     //Stat Variables
     public int score = 0;
     public int bestScore;
+    public int coins = 0;
 
     public float scoreInterval = 0.05f;
 
@@ -34,9 +35,15 @@ public class GameManager : Singleton<GameManager>
     public GameObject Leaderboard;
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI highScoreText;
+    public TextMeshProUGUI coinText;
+    public TextMeshProUGUI distanceText;
+    public TextMeshProUGUI SpeedText;
+    public TextMeshProUGUI runTimeText;
     public List<TextMeshProUGUI> lbEntries = new List<TextMeshProUGUI>();
     public GameObject GameOverText;
     public TextMeshProUGUI levelText;
+    public GameObject mediumFeedback;
+    public GameObject highFeedback;
 
     public enum Feedback { 
         Low,
@@ -66,6 +73,7 @@ public class GameManager : Singleton<GameManager>
         scoreText.text = "Score: " + score;
 
         levelText.text = "Level: " + level;
+        coinText.text = "Coins: " + coins;
 
         if (score > bestScore) {
             highScoreText.text = "Best: " + score;
@@ -158,6 +166,17 @@ public class GameManager : Singleton<GameManager>
         else
         {
             scoreToNextLevel = (int)(15 * Mathf.Pow(level + 1, 2));
+        }
+    }
+
+    public void EnableFeedback() {
+        if (feedbackLevel == Feedback.Medium) {
+            mediumFeedback.SetActive(true);
+        }
+        if (feedbackLevel == Feedback.High)
+        {
+            mediumFeedback.SetActive(true);
+            highFeedback.SetActive(true);
         }
     }
 }
