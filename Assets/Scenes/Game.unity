@@ -407,7 +407,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &311230037
 RectTransform:
   m_ObjectHideFlags: 0
@@ -823,7 +823,7 @@ Transform:
   m_GameObject: {fileID: 493363812}
   serializedVersion: 2
   m_LocalRotation: {x: 0.000000021855694, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.17, y: -1.8799999, z: -39.670002}
+  m_LocalPosition: {x: -0.17, y: -1.8799999, z: -3.97}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1550,7 +1550,7 @@ Transform:
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
   m_LocalRotation: {x: 0.000000021855694, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.17, y: -1.8799999, z: -39.670002}
+  m_LocalPosition: {x: -0.17, y: -1.8799999, z: -3.97}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1950,7 +1950,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f1c0b87f227a5f747801ee4c6ebbe011, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -35.7
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f1c0b87f227a5f747801ee4c6ebbe011, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2398,7 +2398,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Best: '
+  m_text: 'High Score: '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3045,7 +3045,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2019236531
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3140,7 +3140,7 @@ MonoBehaviour:
   GameOver: 0
   saved: 0
   lbScores: 
-  feedbackLevel: 1
+  feedbackLevel: 2
   varietyLevel: 1
   recentlyLeveled: 0
   level: 1

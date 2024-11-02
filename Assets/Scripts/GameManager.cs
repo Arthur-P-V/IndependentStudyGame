@@ -62,6 +62,7 @@ public class GameManager : Singleton<GameManager>
         score = 0;
         //PlayerPrefs.DeleteAll();
         bestScore = lbScores.FirstOrDefault(); //Grabs the highest score (index 0) or returns 0
+        EnableFeedback();
         StartCoroutine("TickScore");
 
         
@@ -74,6 +75,8 @@ public class GameManager : Singleton<GameManager>
 
         levelText.text = "Level: " + level;
         coinText.text = "Coins: " + coins;
+        distanceText.text = "" + (int)Player.transform.position.z + " feet";
+        SpeedText.text = "" + (int)Player.forwardSpeed + "\nSpeed";
 
         if (score > bestScore) {
             highScoreText.text = "Best: " + score;
@@ -86,7 +89,11 @@ public class GameManager : Singleton<GameManager>
         if (score > scoreToNextLevel) {
             level += 1;
             CalculateNextScore();
-            Player.forwardSpeed += Player.forwardSpeed * 0.1f; //Speed up by 10% every level
+            if(Player.forwardSpeed < 200)
+            {
+                Player.forwardSpeed += Player.forwardSpeed * 0.1f; //Speed up by 10% every level
+            }
+           
             recentlyLeveled = true; //Signal the spawner to check if more obstacles should be queued
         }
 
