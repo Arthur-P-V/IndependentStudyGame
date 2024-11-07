@@ -144,6 +144,7 @@ public class GameManager : Singleton<GameManager>
         saved = false;
         Player.dead = false;
         Player.transform.position = new Vector3(0, 0, -20);
+        Player.health = 5;
         StartCoroutine("TickScore");
         
     }
