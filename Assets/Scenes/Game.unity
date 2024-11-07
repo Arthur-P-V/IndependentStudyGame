@@ -1980,6 +1980,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: f1c0b87f227a5f747801ee4c6ebbe011, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: f1c0b87f227a5f747801ee4c6ebbe011, type: 3}
       propertyPath: m_Name
       value: Player
@@ -2022,6 +2026,10 @@ MonoBehaviour:
   speed: 35
   forwardSpeed: 30
   dead: 0
+  health: 5
+  iFrameCount: 0.5
+  hit: 0
+  iFrames: 0
 --- !u!64 &1414846880
 MeshCollider:
   m_ObjectHideFlags: 0
