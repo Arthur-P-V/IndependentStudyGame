@@ -42,6 +42,7 @@ public class GameManager : Singleton<GameManager>
     public List<TextMeshProUGUI> lbEntries = new List<TextMeshProUGUI>();
     public GameObject GameOverText;
     public TextMeshProUGUI levelText;
+    public TextMeshProUGUI healthText;
     public GameObject mediumFeedback;
     public GameObject highFeedback;
 
@@ -75,6 +76,7 @@ public class GameManager : Singleton<GameManager>
 
         levelText.text = "Level: " + level;
         coinText.text = "Coins: " + coins;
+        healthText.text = "Health: " + Player.health;
         distanceText.text = "" + (int)Player.transform.position.z + " feet";
         SpeedText.text = "" + (int)Player.forwardSpeed + "\nSpeed";
 
