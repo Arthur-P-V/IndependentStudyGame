@@ -9,12 +9,15 @@ public class Spawner : MonoBehaviour
 
     public GameObject Player;
     public List<GameObject> ObstaclePrefabs;
+    public List<GameObject> enemyPrefabs;
     public GameObject coin;
     public float spawnInterval = 2f;
 
     private List<GameObject> obstacleQueue = new List<GameObject>();
-    private List<GameObject> waitingForQueue = new List<GameObject>();
+    private List<GameObject> obstaclesWaitingForQueue = new List<GameObject>();
     private List<GameObject> coinQueue = new List<GameObject>();
+    private List<GameObject> enemyQueue = new List<GameObject>();
+    private List<GameObject> enemiesWaitingForQueue = new List<GameObject>();
     
     private GameObject pool;
 
@@ -37,11 +40,24 @@ public class Spawner : MonoBehaviour
                 }
                 else
                 {
-                    waitingForQueue.Add(temp);
+                    obstaclesWaitingForQueue.Add(temp);
                 }
                 
             }
-            
+        }
+
+        foreach (var enemy in enemyPrefabs) {
+            for (int i = 0; i < 10; i++) {
+                GameObject temp = Instantiate(enemy, transform.position, Quaternion.identity);
+
+                if (temp.GetComponent<Enemy>().enemyLevel == 1)
+                {
+                    obstacleQueue.Add(temp);
+                }
+                else { 
+                    enemiesWaitingForQueue.Add(temp);
+                }
+            }
         }
 
         for (int i = 0; i < 20; i++) {
@@ -109,10 +125,10 @@ public class Spawner : MonoBehaviour
     }
 
     public void AddObstaclesOfLevel(int level) {
-        for (int i = 0; i < waitingForQueue.Count; i++ ) {
-            if (waitingForQueue.ElementAt(i).GetComponent<Obstacle>().obstacleLevel <= level) {
-                GameObject temp = waitingForQueue.ElementAt(i);
-                waitingForQueue.Remove(waitingForQueue.ElementAt(i));
+        for (int i = 0; i < obstaclesWaitingForQueue.Count; i++ ) {
+            if (obstaclesWaitingForQueue.ElementAt(i).GetComponent<Obstacle>().obstacleLevel <= level) {
+                GameObject temp = obstaclesWaitingForQueue.ElementAt(i);
+                obstaclesWaitingForQueue.Remove(obstaclesWaitingForQueue.ElementAt(i));
                 obstacleQueue.Insert(Random.Range(0, obstacleQueue.Count), temp);
             }
         }
