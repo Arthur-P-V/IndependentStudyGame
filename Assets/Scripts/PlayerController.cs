@@ -7,91 +7,81 @@ public class PlayerController : MonoBehaviour
 {
     // Start is called before the first frame update
 
-    public float speed = 100f;
+    public float speed = 1000f;
+    public float inputSpeed = 50f;
     public float forwardSpeed = 10f;
+    private Vector3 direction;
     public bool dead = false;
     public int health = 5;
     public float iFrameCount = 0.5f;
     public bool hit = false;
-    public bool iFrames = false;
+    public Animator animator;
+    private Rigidbody rb;
+    private bool isBouncing = false;
 
     void Start()
     {
-        
+        animator = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody>();
     }
 
-    // Update is called once per frame
+
     void Update()
+    {
+        direction = new Vector3(Input.GetAxis("Horizontal") * inputSpeed, Input.GetAxis("Vertical") * inputSpeed, forwardSpeed);
+    }
+    // Update is called once per frame
+    void FixedUpdate()
     {
         if (!dead)
         {
-            if (!hit)
-            {
-                transform.position = transform.position + new Vector3(0, 0, forwardSpeed) * Time.deltaTime;
-            }
-            else { 
-                transform.position = transform.position + new Vector3(0,0, -(forwardSpeed / 4)) * Time.deltaTime;
-            }
-
-
-            float horizontalDirection = Input.GetAxis("Horizontal");
-            float verticalDirection = Input.GetAxis("Vertical");
-
-            transform.Translate(new Vector3(horizontalDirection * speed * Time.deltaTime, verticalDirection * speed * Time.deltaTime, 0));
+            if (!isBouncing) rb.velocity = direction * speed * Time.fixedDeltaTime;
         }
         
+
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         print("HIT");
         if (collision.collider.CompareTag("Wall")) {
-            forwardSpeed -= forwardSpeed * 0.25f; // Decrease Speed by 25% on death
+
+            isBouncing = true;
+            rb.AddForce(collision.contacts[0].normal * 15, ForceMode.Impulse); //Bounce Player Off collided Object
+            Invoke("StopBounce", 0.2f);
+
             if (!hit) { //Keeps OnCollisionEnter from depleting health immediately by looping
                 health--; 
-            }
+                forwardSpeed -= forwardSpeed * 0.25f; // Decrease Speed by 25% on death
+                
 
-            if (health <= 0)
-            {
-                dead = true;
-                return;
+                if (health <= 0)
+                {
+                    dead = true;
+                    return;
+                }
+                else
+                {
+                    HitFunction();
+                    return;
+                }
             }
-            else
-            {
-                HitFunction();
-                return;
-            } 
         }
+    }
+
+    void StopBounce() {
+        isBouncing = false;
     }
 
     private void HitFunction() {
-        StartCoroutine("hitTimer");
-        StartCoroutine("iFrameTimer");
-        StartCoroutine("iFrameRoutine");
+        StartCoroutine("HitTimer");
     }    
-    private IEnumerator iFrameRoutine() {
-        MeshCollider collider = GetComponent<MeshCollider>();
-        MeshRenderer visible = GetComponent<MeshRenderer>();
 
-
-        collider.enabled = false;
-        while (iFrames) {
-            visible.enabled = false;
-            yield return new WaitForSeconds(0.3f);
-            visible.enabled = true;
-        }
-        collider.enabled = true;
-
-    }
-    private IEnumerator iFrameTimer()
-    {
-        iFrames = true;
-        yield return new WaitForSeconds(1.25f);
-        iFrames = false;
-    }
-    private IEnumerator hitTimer() {
+    private IEnumerator HitTimer() {
         hit = true;
-        yield return new WaitForSeconds(0.75f);
+        animator.SetBool("iFrames?", true);
+        yield return new WaitForSeconds(1.0f);
+        animator.SetBool("iFrames?", false);
         hit = false;
     }
 
