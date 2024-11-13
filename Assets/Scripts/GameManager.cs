@@ -138,6 +138,7 @@ public class GameManager : Singleton<GameManager>
     { 
         score = 0;
         level = 1;
+        coins = 0;
         scoreToNextLevel = 100;
         bestScore = lbScores.FirstOrDefault();
         Leaderboard.SetActive(false);
