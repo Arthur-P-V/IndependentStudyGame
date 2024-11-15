@@ -28,6 +28,8 @@ public class GameManager : Singleton<GameManager>
     public int score = 0;
     public int bestScore;
     public int coins = 0;
+    public float runTime = 0;
+    public int killCount = 0;
 
     public float scoreInterval = 0.05f;
 
@@ -39,6 +41,7 @@ public class GameManager : Singleton<GameManager>
     public TextMeshProUGUI distanceText;
     public TextMeshProUGUI SpeedText;
     public TextMeshProUGUI runTimeText;
+    public TextMeshProUGUI killCountText;
     public List<TextMeshProUGUI> lbEntries = new List<TextMeshProUGUI>();
     public GameObject GameOverText;
     public TextMeshProUGUI levelText;
@@ -79,6 +82,10 @@ public class GameManager : Singleton<GameManager>
         healthText.text = "Health: " + Player.health;
         distanceText.text = "" + (int)Player.transform.position.z + " feet";
         SpeedText.text = "" + (int)Player.forwardSpeed + "\nSpeed";
+        killCountText.text = "" + killCount + "\nKills";
+
+        runTime += Time.deltaTime;
+        UpdateTimer();
 
         if (score > bestScore) {
             highScoreText.text = "Best: " + score;
@@ -125,6 +132,22 @@ public class GameManager : Singleton<GameManager>
 
     }
 
+    public void UpdateTimer() {
+        var minutes = (int)runTime / 60;
+        var seconds = (int)runTime % 60;
+        var milliseconds = (runTime * 100) % 100;
+
+
+
+        if (runTime > 60)
+        {
+            runTimeText.text = string.Format("{0:00}:{1:00}:{2:00}", minutes, seconds, milliseconds);
+        }
+        else {
+            runTimeText.text = string.Format("{0:00}:{1:00}", seconds, milliseconds);
+        }
+    }
+
 
     public void DisplayLeaderboard() {
         for (int i = 0; i < 5; i++)
@@ -139,7 +162,9 @@ public class GameManager : Singleton<GameManager>
         score = 0;
         level = 1;
         coins = 0;
+        killCount = 0;
         scoreToNextLevel = 100;
+        runTime = 0;
         bestScore = lbScores.FirstOrDefault();
         Leaderboard.SetActive(false);
         GameOverText.SetActive(false);

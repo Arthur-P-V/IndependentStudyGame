@@ -30,6 +30,7 @@ public class Enemy : MonoBehaviour
 
     public void Die() {
         gameObject.SetActive(false);
+        GameManager.Instance.killCount++;
     }
 
     public void Spawn(Vector3 spawnerTransform) {
@@ -37,15 +38,14 @@ public class Enemy : MonoBehaviour
 
         float x = Random.Range(-20f, 20f);
         float y = Random.Range(-10f, 10f);
-        float rotation = Random.Range(0f, 180f);
         Vector3 newTransform = new(x, y, spawnerTransform.z);
-        gameObject.transform.SetPositionAndRotation(newTransform, Quaternion.Euler(0, 0, rotation));
+        gameObject.transform.position = newTransform;
     }
 
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.CompareTag("Player")) {
+        if (collision.collider.CompareTag("Projectile")) {
             TakeDamage();
         }
     }

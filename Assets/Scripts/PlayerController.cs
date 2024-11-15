@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.U2D;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -18,6 +16,9 @@ public class PlayerController : MonoBehaviour
     public Animator animator;
     private Rigidbody rb;
     private bool isBouncing = false;
+    
+    public GameObject firePoint;
+    public GameObject projectile;
 
     void Start()
     {
@@ -29,6 +30,10 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         direction = new Vector3(Input.GetAxis("Horizontal") * inputSpeed, Input.GetAxis("Vertical") * inputSpeed, forwardSpeed);
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Shoot();
+        }
     }
     // Update is called once per frame
     void FixedUpdate()
@@ -44,7 +49,7 @@ public class PlayerController : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         print("HIT");
-        if (collision.collider.CompareTag("Wall")) {
+        if (collision.collider.CompareTag("Wall") || collision.collider.CompareTag("Enemy")) {
 
             isBouncing = true;
             rb.AddForce(collision.contacts[0].normal * 15, ForceMode.Impulse); //Bounce Player Off collided Object
@@ -69,7 +74,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void StopBounce() {
+    public void Shoot() {
+        GameObject tempProjectile = Instantiate(projectile, firePoint.transform.position, Quaternion.identity);
+        tempProjectile.GetComponent<Rigidbody>().AddForce(Vector3.forward * 5000, ForceMode.Force);
+    }
+
+    public void StopBounce() {
         isBouncing = false;
     }
 

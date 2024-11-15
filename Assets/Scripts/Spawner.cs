@@ -11,7 +11,7 @@ public class Spawner : MonoBehaviour
     public List<GameObject> ObstaclePrefabs;
     public List<GameObject> enemyPrefabs;
     public GameObject coin;
-    public float spawnInterval = 2f;
+    public float spawnInterval = 3f;
 
     private List<GameObject> obstacleQueue = new List<GameObject>();
     private List<GameObject> obstaclesWaitingForQueue = new List<GameObject>();
@@ -31,7 +31,15 @@ public class Spawner : MonoBehaviour
     void Start()
     {
         foreach (var obstacle in ObstaclePrefabs ) {
-            for (int i = 0; i < 10; i++)
+            var count = 0;
+            if (obstacle.GetComponent<Obstacle>().obstacleLevel == 1) //This is literally to try and stave off lag and thats it
+            {
+                count = 10;
+            }
+            else {
+                count = 4;
+            }
+            for (int i = 0; i < count; i++)
             {
                 GameObject temp = Instantiate(obstacle, transform.position, Quaternion.identity);
 
@@ -48,11 +56,11 @@ public class Spawner : MonoBehaviour
 
         foreach (var enemy in enemyPrefabs) {
             for (int i = 0; i < 10; i++) {
-                GameObject temp = Instantiate(enemy, transform.position, Quaternion.identity);
+                GameObject temp = Instantiate(enemy, transform.position, Quaternion.Euler(-90, 0, -180));
 
                 if (temp.GetComponent<Enemy>().enemyLevel == 1)
                 {
-                    obstacleQueue.Add(temp);
+                    enemyQueue.Add(temp);
                 }
                 else { 
                     enemiesWaitingForQueue.Add(temp);
@@ -99,11 +107,13 @@ public class Spawner : MonoBehaviour
             if (!GameManager.Instance.GameOver) //Run the spawner till the game stops
             {
                 Spawn();
-                yield return new WaitForSeconds(spawnInterval / 2);
+                yield return new WaitForSeconds(spawnInterval / 3);
                 SpawnCoin();
+                yield return new WaitForSeconds(spawnInterval / 3);
+                SpawnEnemy();
             }
             
-            yield return new WaitForSeconds(spawnInterval / 2);  
+            yield return new WaitForSeconds(spawnInterval / 3);  
         }   
     }
 
@@ -122,6 +132,16 @@ public class Spawner : MonoBehaviour
         obstacleQueue.Add(obstacleToSpawn);
 
         obstacleToSpawn.GetComponent<Obstacle>().Spawn(gameObject.transform.position);
+    }
+
+    private void SpawnEnemy() { 
+        GameObject enemyToSpawn = enemyQueue.ElementAt(0);
+        enemyQueue.RemoveAt(0);
+        enemyQueue.Add(enemyToSpawn);
+
+
+        enemyToSpawn.SetActive(true);
+        enemyToSpawn.GetComponent<Enemy>().Spawn(gameObject.transform.position);
     }
 
     public void AddObstaclesOfLevel(int level) {
