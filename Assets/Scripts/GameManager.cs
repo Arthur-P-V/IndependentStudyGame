@@ -84,8 +84,10 @@ public class GameManager : Singleton<GameManager>
         SpeedText.text = "" + (int)Player.forwardSpeed + "\nSpeed";
         killCountText.text = "" + killCount + "\nKills";
 
-        runTime += Time.deltaTime;
-        UpdateTimer();
+        if(!Player.dead) { 
+            runTime += Time.deltaTime;
+            UpdateTimer();
+        }
 
         if (score > bestScore) {
             highScoreText.text = "Best: " + score;

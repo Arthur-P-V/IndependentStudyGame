@@ -31,15 +31,15 @@ public class Spawner : MonoBehaviour
     void Start()
     {
         foreach (var obstacle in ObstaclePrefabs ) {
-            var count = 0;
+/*            var count = 0;
             if (obstacle.GetComponent<Obstacle>().obstacleLevel == 1) //This is literally to try and stave off lag and thats it
             {
                 count = 10;
             }
             else {
                 count = 4;
-            }
-            for (int i = 0; i < count; i++)
+            }*/
+            for (int i = 0; i < 10; i++)
             {
                 GameObject temp = Instantiate(obstacle, transform.position, Quaternion.identity);
 
